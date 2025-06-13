@@ -34,5 +34,5 @@ sudo su -
 * mssql-tools
 * mongodb-tools
 * redis-tools
-* python3
+
 
