@@ -104,6 +104,9 @@ RUN ibmcloud plugin install monitoring -f && \
     ibmcloud plugin install metrics-router -f && \
     ibmcloud plugin install event-streams -f
 
+RUN find /app -type d -exec chmod 777 {} \; && \
+    chmod 777 /app/.bluemix/config.json
+
 ENV LANG en_US.utf8
 ENV TZ=UTC
 ENV PATH="/opt/mssql-tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
