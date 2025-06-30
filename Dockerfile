@@ -81,12 +81,14 @@ RUN useradd --uid 1000 -m -s /bin/bash -d /home/app app \
     && usermod -aG sudo app \
     && echo "app ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers \
     && mkdir -p /app \
+    && chmod 777 /app \
     && chown -R app:app /app
 
 
 
 WORKDIR /app
 USER app
+ENV HOME=/app
 
 # Install ibmcloud cli plugins
 RUN ibmcloud plugin install container-service -f && \
