@@ -105,7 +105,7 @@ RUN ibmcloud plugin install monitoring -f && \
     ibmcloud plugin install event-streams -f
 
 RUN find /app -type d -exec chmod 777 {} \; && \
-    chmod 777 /app/.bluemix/config.json
+    find /app -type f -exec chmod 777 {} \;
 
 ENV LANG en_US.utf8
 ENV TZ=UTC
