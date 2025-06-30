@@ -69,6 +69,9 @@ RUN curl https://fastdl.mongodb.org/tools/db/mongodb-database-tools-ubuntu2204-x
     && chmod +x /usr/local/bin/mongotop
 
 
+# install ibmcloud cli
+RUN curl -fsSL https://clis.cloud.ibm.com/install/linux | sh
+
 RUN rm -rf /var/lib/apt/lists/* \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
@@ -80,8 +83,25 @@ RUN useradd --uid 1000 -m -s /bin/bash -d /home/app app \
     && mkdir -p /app \
     && chown -R app:app /app
 
+
+
 WORKDIR /app
 USER app
+
+# Install ibmcloud cli plugins
+RUN ibmcloud plugin install container-service -f && \
+    ibmcloud plugin install container-registry -f && \
+    ibmcloud plugin install cloud-databases -f && \
+    ibmcloud plugin install cloud-object-storage -f && \
+    ibmcloud plugin install cloud-internet-services -f && \
+    ibmcloud plugin install cloud-logs -f && \
+    ibmcloud plugin install vpc-infrastructure -f
+
+RUN ibmcloud plugin install monitoring -f && \
+    ibmcloud plugin install secrets-manager -f && \
+    ibmcloud plugin install metrics-router -f && \
+    ibmcloud plugin install event-streams -f
+
 ENV LANG en_US.utf8
 ENV TZ=UTC
 ENV PATH="/opt/mssql-tools/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
